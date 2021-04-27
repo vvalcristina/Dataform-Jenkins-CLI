@@ -1,0 +1,6 @@
+config {
+  type: "declaration",
+  schema: "ecommerce",
+  name: "all_sessions",
+  database: "data-to-insights"
+}

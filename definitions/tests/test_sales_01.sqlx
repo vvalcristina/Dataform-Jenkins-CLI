@@ -1,0 +1,21 @@
+config {
+  type: "test",
+  dataset: "brasil_sales_report"
+}
+
+input "all_sessions" {
+select
+ 123 as transactionRevenue,
+ "Brazil" as country,
+ "20180101" as date
+union all
+select
+ null as transactionRevenue,
+ "Canada" as country,
+ "20080101" as date
+}
+
+select
+ 123 as transactionRevenue,
+ "Brazil" as country,
+ "20180101" as date

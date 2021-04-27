@@ -1,0 +1,17 @@
+config {
+  type: "view",
+  assertions: {
+    rowConditions: [
+      'country = "Brazil"'
+    ],
+    nonNull: ["transactionRevenue"]
+  }
+}
+
+select
+  *
+from 
+   ${ref("all_sessions")}
+where transactionRevenue is not null
+and country = "Brazil"
+and date >= ${constants.MIN_DATA}
