@@ -20,23 +20,14 @@ pipeline {
     }
     stage('Dataform Install') {
           steps {
-              sh 'dataform install'
+            sh 'dataform install'
 			  }   
       	}
-    stage('Dataform Tests'){ 
-		steps {
-            withCredentials([file(credentialsId: "dataform-cred", variable: 'DATAFORM_CRED_FILE')]) { 
-
-				sh 'dataform test --credentials ${DATAFORM_CRED_FILE}'
-				}
-	  	}    
-    }
-  stage('Dataform Run'){ 
+  stage('Dataform Run Tests'){ 
 		steps {
         withCredentials([file(credentialsId: "dataform-cred", variable: 'DATAFORM_CRED_FILE')]) { 
-
-				sh 'dataform run --credentials ${DATAFORM_CRED_FILE}'
-				}
+			sh 'dataform run --run-tests=true --credentials ${DATAFORM_CRED_FILE}'
+			}
 	  	}    
     }
     }
