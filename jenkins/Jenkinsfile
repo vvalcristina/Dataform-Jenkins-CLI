@@ -1,0 +1,43 @@
+pipeline {
+
+  agent any
+  parameters {
+    gitParameter branchFilter: 'origin/', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+  }
+  tools {nodejs "node"}
+
+  stages {    
+    stage('Cloning Git') {
+      steps {
+       git branch: "${params.BRANCH}", url: 'https://github.com/vvalcristina/Dataform-Jenkins-CLI.git'
+      }
+    }
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+        sh 'npm i -g @dataform/cli'
+      }
+    }
+    stage('Dataform Install') {
+          steps {
+              sh 'dataform install'
+			  }   
+      	}
+    stage('Dataform Tests'){ 
+		steps {
+            withCredentials([file(credentialsId: "dataform-cred", variable: 'DATAFORM_CRED_FILE')]) { 
+
+				sh 'dataform test --credentials ${DATAFORM_CRED_FILE}'
+				}
+	  	}    
+    }
+  stage('Dataform Run'){ 
+		steps {
+        withCredentials([file(credentialsId: "dataform-cred", variable: 'DATAFORM_CRED_FILE')]) { 
+
+				sh 'dataform run --credentials ${DATAFORM_CRED_FILE}'
+				}
+	  	}    
+    }
+    }
+}
