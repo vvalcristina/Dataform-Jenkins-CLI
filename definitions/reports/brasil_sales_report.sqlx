@@ -5,6 +5,11 @@ config {
       'country = "Brazil"'
     ],
     nonNull: ["transactionRevenue"]
+  },
+  description: "Description Transaction",
+  columns: {
+    country: "Country column",
+    transactions: "Transaction column"
   }
 }
 
